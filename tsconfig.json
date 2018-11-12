@@ -15,7 +15,7 @@
 		],
 		"baseUrl": "./",
 		"paths": {
-			"@alienlib/*": ["/Users/rockyl/WorkSpaces/alienlib/src/*"],
+			"@alienlib/*": ["alienlib/src/*"],
 			"@core/*": ["src/core/*"]
 		}
 	},
