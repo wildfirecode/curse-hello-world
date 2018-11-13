@@ -1,34 +1,52 @@
-/**
- * Created by rockyl on 2018/10/10.
- */
-
 import CurseComponent from "@core/curse/CurseComponent";
-import {sin, Wave} from "@alienlib/animation/wave";
-import {delayLoad} from "../Utils";
+import { delayLoad } from "../Utils";
+import Breath from './Breath';
+import BuriedPointButton from './BuriedPointButton';
 
-export default class SceneMenu extends CurseComponent{
-	lab: eui.Label = null;
+const createComponent = (cls, host, options) => {
+	const component = new cls();
+	component.host = host;
+	for (const key in options) {
+		if (options.hasOwnProperty(key)) {
+			const val = options[key];
+			component[key] = val;
+		}
+	}
+	component.onCreate();
+	return component;
+}
 
-	wave: Wave;
-
+export default class SceneMenu extends CurseComponent {
+	btnStart: eui.Button = null;
 	protected onCreate() {
 		super.onCreate();
 
-		this.wave = new Wave(this.lab, 2000, sin.bind(null, 20), 0, false);
+		this.components = this.component || [];
+
+		const breath = createComponent(Breath, this.btnStart, {
+			duration: 1000,
+			scaleOffset: 0.1
+		});
+
+		const buriedPointButton = createComponent(BuriedPointButton, this.btnStart, {
+			dpm: "app_id.202.7.1",
+			dcm: "213.oaid.0.0"
+		});
+
+		this.components.push(breath, buriedPointButton);
 
 		delayLoad();
 	}
 
 	protected awake() {
 		super.awake();
-
-		this.wave.play();
+		this.components.forEach(component => component.awake());
 	}
 
 	protected sleep() {
 		super.sleep();
+		this.components.forEach(component => component.awake());
 
-		this.wave.stop(true);
 	}
 
 	protected destroy() {

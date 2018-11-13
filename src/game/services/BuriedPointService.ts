@@ -55,29 +55,30 @@ class BuriedPointService extends Service {
 	}
 
 	log(name, type) {
-		let logPoint = this._buriedPoints[name];
+		// let logPoint = this._buriedPoints[name];
 
-		let {consumerId} = gameInfo;
-		let {appId} = GameConfig.appConfig;
-		let {dpm, dcm} = logPoint;
+		// let {consumerId} = gameInfo;
+		// let {appId} = GameConfig.appConfig;
+		// let {dpm, dcm} = logPoint;
 
-		if (type == 'exposure') {
-			return JSONP('//embedlog.duiba.com.cn/exposure/standard', {
-				dpm, dcm, consumerId, appId,
-			}, 'get').catch(e => {
-				//console.log(e);
-			});
-		} else {
-			return webService.callApi(
-				'/log/click',
-				{
-					dpm, dcm, consumerId, appId
-				},
-				'get'
-			).catch(e => {
-				//console.log(e);
-			});
-		}
+		// if (type == 'exposure') {
+		// 	return JSONP('//embedlog.duiba.com.cn/exposure/standard', {
+		// 		dpm, dcm, consumerId, appId,
+		// 	}, 'get').catch(e => {
+		// 		//console.log(e);
+		// 	});
+		// } else {
+		// 	return webService.callApi(
+		// 		'/log/click',
+		// 		{
+		// 			dpm, dcm, consumerId, appId
+		// 		},
+		// 		'get'
+		// 	).catch(e => {
+		// 		//console.log(e);
+		// 	});
+		// }
+		console.log('log',name,type)
 	}
 }
 

@@ -113,7 +113,7 @@ function transData(data){
 	}
 }
 
-function bindComponent(host, component, injection) {
+export function bindComponent(host, component, injection) {
 	let components = getComponents(host, true);
 	components.push(component);
 
