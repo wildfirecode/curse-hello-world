@@ -3500,6 +3500,35 @@ var BuriedPointButton = (function (_super) {
     return BuriedPointButton;
 }(CurseComponent));
 
+var FadeIn = (function (_super) {
+    __extends(FadeIn, _super);
+    function FadeIn() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.duration = 1000;
+        _this.ease = egret.Ease.cubicOut;
+        return _this;
+    }
+    FadeIn.prototype.onCreate = function () {
+        _super.prototype.onCreate.call(this);
+        this.tween = egret.Tween.get(this.host).set({ alpha: 0 })
+            .to({ alpha: 1 }, this.duration, this.ease);
+        this.tween.setPaused(true);
+    };
+    FadeIn.prototype.awake = function () {
+        _super.prototype.awake.call(this);
+        this.tween.setPaused(false);
+    };
+    FadeIn.prototype.sleep = function () {
+        _super.prototype.sleep.call(this);
+        this.tween.setPaused(true);
+    };
+    FadeIn.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
+        egret.Tween.removeTweens(this.host);
+    };
+    return FadeIn;
+}(CurseComponent));
+
 var createComponent = function (cls, host, options) {
     var component = new cls();
     component.host = host;
@@ -3530,7 +3559,11 @@ var SceneMenu = (function (_super) {
             dpm: "app_id.202.7.1",
             dcm: "213.oaid.0.0"
         });
-        this.components.push(breath, buriedPointButton);
+        var fadeIn = createComponent(FadeIn, this.btnStart, {
+            duration: 2000,
+            ease: egret.Ease.cubicOut
+        });
+        this.components.push(breath, buriedPointButton, fadeIn);
     };
     SceneMenu.prototype.awake = function () {
         _super.prototype.awake.call(this);

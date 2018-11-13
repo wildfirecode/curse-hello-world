@@ -2,6 +2,7 @@ import CurseComponent from "@core/curse/CurseComponent";
 import { delayLoad } from "../Utils";
 import Breath from './Breath';
 import BuriedPointButton from './BuriedPointButton';
+import FadeIn from './FadeIn';
 
 const createComponent = (cls, host, options) => {
 	const component = new cls();
@@ -33,7 +34,12 @@ export default class SceneMenu extends CurseComponent {
 			dcm: "213.oaid.0.0"
 		});
 
-		this.components.push(breath, buriedPointButton);
+		const fadeIn = createComponent(FadeIn, this.btnStart, {
+			duration: 2000,
+			ease: egret.Ease.cubicOut
+		});
+
+		this.components.push(breath, buriedPointButton, fadeIn);
 
 		delayLoad();
 	}
